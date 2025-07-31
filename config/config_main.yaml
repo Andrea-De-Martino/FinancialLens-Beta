@@ -1,0 +1,155 @@
+# ====================================================================================
+# MAIN CONFIGURATION - Financial Statement Parser System
+# 
+# This file contains core processing parameters, system settings, and operational
+# thresholds for the financial statement parser. It centralizes all previously
+# hardcoded values and provides the main configuration backbone for the system.
+#
+# Version: Modular v2.0
+# ====================================================================================
+
+# Core Parser Processing Settings
+# These parameters control the fundamental behavior of text matching and processing
+parser_settings:
+  # Fuzzy matching thresholds for text recognition
+  fuzzy_score_threshold: 90                    # Minimum score for accepting fuzzy matches
+  ignore_fuzzy_score_threshold: 90             # Threshold for ignore pattern matching
+  enrichment_score_threshold: 85               # Standard threshold for enrichment matching
+  enrichment_high_confidence_threshold: 95     # High confidence threshold for enrichment first pass
+
+# Advanced Processing Thresholds
+# Fine-tuned parameters for specialized processing scenarios
+processing_thresholds:
+  # Nota Integrativa processing limits
+  ni_search_page_limit: 20                     # Maximum pages to search for NI tables
+  
+  # Retry mechanism settings
+  max_retry_attempts: 3                        # Maximum parsing attempts for non-deterministic behavior
+  
+  # Header similarity for table continuation detection
+  table_continuation_threshold: 80             # Similarity threshold for merging spanning tables
+
+# Mathematical Validation Settings
+# Parameters controlling the tolerance and precision of financial validations
+validation_settings:
+  # Tolerance calculation parameters
+  tolerance_percentage: 0.01                   # 1% tolerance for relative differences
+  tolerance_minimum: 2.0                       # Minimum absolute tolerance in euros
+  immediate_success_threshold: 2.0             # Threshold for immediate success classification
+  
+  # Rounding precision
+  display_precision: 2                         # Decimal places for display values
+
+# Output File Settings
+# Configuration for result file naming and organization
+output_settings:
+  # File prefixes based on validation status
+  prefixes:
+    success: ""                                # No prefix for successful parsing
+    success_with_tolerance: "SuccessWithTol_"  # Prefix for tolerance-passed results
+    failed: "Failed_"                          # Prefix for failed validation results
+  
+  # Output format settings
+  excel_enabled: true                          # Enable Excel output generation
+  json_enabled: true                           # Enable JSON output generation
+
+# PDF Extraction Configuration
+# Settings controlling PDF document processing and table extraction
+pdf_extraction:
+  # Table extraction strategy
+  table_settings:
+    vertical_strategy: "lines"                 # Strategy for detecting table columns
+    horizontal_strategy: "text"                # Strategy for detecting table rows
+    min_words_vertical: 2                      # Minimum words for vertical line detection
+  
+  # Text extraction parameters
+  text_extraction:
+    x_tolerance: 1                             # Horizontal tolerance for text extraction
+    preserve_whitespace: false                 # Whether to preserve original whitespace
+  
+  # Document section detection patterns
+  section_patterns:
+    stato_patrimoniale: "\\b(stato\\s+patrimoniale)\\b"
+    conto_economico: "\\b(conto\\s+economico)\\b"
+  
+  # Abbreviated format detection patterns
+  abbreviated_format_indicators:
+    - "bilancio è stato redatto in forma abbreviata"
+    - "bilancio è redatto in forma abbreviata"
+    - "forma abbreviata"
+    - "art. 2435-bis"
+    - "articolo 2435-bis"
+    - "bilanci abbreviati"
+
+# System Logging Configuration
+# Settings for logging behavior and output formatting
+logging_settings:
+  # Logging levels and targets
+  console_level: "INFO"                        # Console logging level
+  file_logging_enabled: false                 # Disable general log file creation
+  
+  # Unmatched items logging
+  unmatched_logging:
+    enabled: true                              # Enable unmatched items logging
+    filename: "unmatched_items.log"            # Filename for unmatched items
+    format: "[{context}] Page {page}: \"{text}\" -> NO_MATCH"
+  
+  # Message language and formatting
+  language: "english"                          # All messages in English
+  include_debug_info: false                    # Exclude debug information
+  clean_output: true                           # Clean, professional output format
+
+# Performance and Memory Settings
+# Configuration for system performance optimization
+performance:
+  # Memory management
+  large_file_threshold_mb: 50                  # Threshold for large file handling
+  max_tables_per_page: 10                      # Maximum tables to process per page
+  
+  # Processing optimization
+  parallel_processing: false                   # Disable parallel processing (not implemented)
+  cache_enabled: false                         # Disable caching (not implemented)
+
+# Financial Statement Temporal Classifications
+# Standard strings for temporal classification processing
+temporal_classifications:
+  # Maturity indicators
+  within_year: "esigibili entro l'esercizio successivo"
+  beyond_year: "esigibili oltre l'esercizio successivo"
+  
+  # Common temporal patterns
+  patterns:
+    within_pattern: "\\besigibili.*entro.*esercizio\\b"
+    beyond_pattern: "\\besigibili.*oltre.*esercizio\\b"
+
+# Quality Assurance Settings
+# Parameters for ensuring parsing quality and consistency
+quality_assurance:
+  # Validation checks
+  enable_hierarchy_validation: true            # Validate hierarchical structure integrity
+  enable_mathematical_validation: true        # Validate mathematical consistency
+  enable_schema_validation: true              # Validate against financial statement schema
+  
+  # Error handling
+  strict_mode: false                           # Whether to fail on minor inconsistencies
+  continue_on_validation_errors: true         # Continue processing despite validation errors
+  
+  # Reporting
+  generate_statistics: true                    # Generate processing statistics
+  include_confidence_scores: true             # Include confidence scores in output
+
+# System Metadata
+# Information about the configuration and system version
+metadata:
+  config_version: "2.0"                        # Configuration file format version
+  system_version: "Modular Architecture v1.0" # Parser system version
+  created_date: "2024"                         # Configuration creation date
+  description: "Main configuration file for modular financial statement parser"
+  
+  # Compatibility information
+  min_python_version: "3.8"                   # Minimum required Python version
+  required_dependencies:
+    - "pdfplumber"
+    - "fuzzywuzzy"
+    - "openpyxl"
+    - "yaml"

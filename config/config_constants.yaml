@@ -1,0 +1,317 @@
+# ====================================================================================
+# CONSTANTS CONFIGURATION - Financial Statement Parser System
+#
+# This file contains all string constants, patterns, and text-based configuration
+# used throughout the financial statement parser. It centralizes text patterns,
+# ignore rules, document section names, and other string-based constants to
+# enable easy modification without code changes.
+#
+# These constants are critical for text recognition, document structure detection,
+# and filtering of irrelevant content during the parsing process.
+#
+# Version: Modular v2.0
+# ====================================================================================
+
+# DOCUMENT SECTION NAMES
+# Standard section names found in Italian financial statement documents
+raw_text_sections:
+  - 'Rendiconto finanziario'
+  - 'Nota integrativa'              # Supplementary notes section
+  - 'Relazione sulla gestione'     # Management report
+  - 'Relazione del revisore'       # Auditor's report
+  - 'Relazione del Revisore Legale' # Legal auditor's report
+  - 'Relazione del Collegio Sindacale' # Board of auditors report
+  - 'Verbale di assemblea'         # Assembly minutes
+  - 'Prospetto di raccordo'        # Reconciliation statement
+
+# TEXT PATTERNS TO IGNORE
+# Patterns that should be filtered out during financial statement parsing
+ignore_patterns:
+  - 'totale parziale'              # Partial totals
+  - 'subtotale'                    # Subtotals
+  - 'di cui:'                      # "Of which:" indicators
+  - 'di cui'                       # "Of which" indicators
+  - "di cui entro l'esercizio"     # "Of which within the year"
+  - "di cui oltre l'esercizio"     # "Of which beyond the year"
+  - '...'                          # Ellipsis indicators
+  - '-------'                      # Dash separators
+  - '========'                     # Equal sign separators
+  - 'stato patrimoniale'           # Balance sheet headers
+  - 'conto economico'              # Income statement headers
+  - 'rendiconto finanziario'       # Cash flow statement headers
+  - 'attivo'                       # Assets headers
+  - 'passivo'                      # Liabilities headers
+  - 'ammortamenti'                 # Depreciation headers
+  - 'totale crediti'               # Total receivables headers
+  - 'totale debiti'                # Total payables headers
+  - 'totale immobilizzazioni'      # Total fixed assets headers
+
+# DOCUMENT STRUCTURE PATTERNS
+# Regular expression patterns for detecting document structure
+section_detection_patterns:
+  # Main financial statement sections
+  balance_sheet:
+    pattern: "\\b(stato\\s+patrimoniale)\\b"
+    case_sensitive: false
+    description: "Pattern for detecting Balance Sheet sections"
+  
+  income_statement:
+    pattern: "\\b(conto\\s+economico)\\b"
+    case_sensitive: false
+    description: "Pattern for detecting Income Statement sections"
+  
+  cash_flow_statement:
+    pattern: "\\b(rendiconto\\s+finanziario)\\b"
+    case_sensitive: false
+    description: "Pattern for detecting Cash Flow Statement sections"
+  
+  # Document year detection
+  document_year:
+    pattern: "\\b(20\\d{2})\\b"
+    case_sensitive: false
+    description: "Pattern for extracting document year"
+
+# ABBREVIATED FORMAT DETECTION
+# Patterns used to identify abbreviated format financial statements
+abbreviated_format_indicators:
+  primary_patterns:
+    - "bilancio è stato redatto in forma abbreviata"
+    - "bilancio è redatto in forma abbreviata"
+    - "forma abbreviata"
+  
+  legal_references:
+    - "art. 2435-bis"
+    - "articolo 2435-bis"
+    - "art 2435-bis"
+    - "articolo 2435 bis"
+  
+  contextual_patterns:
+    - "bilanci abbreviati"
+    - "schema abbreviato"
+    - "formato abbreviato"
+    - "redatto in forma abbreviata"
+
+# TEMPORAL CLASSIFICATION STRINGS
+# Standard strings for temporal classification in financial statements
+temporal_classifications:
+  # Standard maturity indicators
+  within_year:
+    canonical: "esigibili entro l'esercizio successivo"
+    variations:
+      - "entro l'esercizio successivo"
+      - "esigibili entro l'esercizio"
+      - "entro esercizio successivo"
+      - "scadenti entro l'esercizio"
+      - "con scadenza entro l'esercizio"
+  
+  beyond_year:
+    canonical: "esigibili oltre l'esercizio successivo"
+    variations:
+      - "oltre l'esercizio successivo"
+      - "esigibili oltre l'esercizio"
+      - "oltre esercizio successivo"
+      - "scadenti oltre l'esercizio"
+      - "con scadenza oltre l'esercizio"
+  
+  # Pattern matching for temporal detection
+  temporal_patterns:
+    within_pattern: "\\besigibili.*entro.*esercizio\\b"
+    beyond_pattern: "\\besigibili.*oltre.*esercizio\\b"
+    general_maturity: "\\b(entro|oltre)\\s+l?'?esercizio\\b"
+
+# FINANCIAL STATEMENT STANDARD STRINGS
+# Common strings found in Italian financial statements
+standard_financial_strings:
+  # Common prefixes and indicators
+  section_indicators:
+    - "Totale"
+    - "di cui"
+    - "importi esigibili"
+    - "quota scadente"
+    - "valore di bilancio"
+  
+  # Asset classifications
+  asset_types:
+    - "immobilizzazioni"
+    - "attivo circolante"
+    - "disponibilità liquide"
+    - "rimanenze"
+    - "crediti"
+  
+  # Liability classifications
+  liability_types:
+    - "patrimonio netto"
+    - "debiti"
+    - "fondi per rischi"
+    - "trattamento di fine rapporto"
+  
+  # Income statement items
+  income_statement_items:
+    - "valore della produzione"
+    - "costi della produzione"
+    - "proventi e oneri finanziari"
+    - "rettifiche di valore"
+    - "imposte sul reddito"
+
+# ENTITY RELATIONSHIP INDICATORS
+# Strings indicating relationships between entities
+entity_relationships:
+  # Control relationships
+  control_indicators:
+    - "imprese controllate"
+    - "imprese controllanti"
+    - "imprese collegate"
+    - "sottoposte al controllo"
+    - "controllo delle controllanti"
+  
+  # Related party indicators
+  related_party_patterns:
+    - "verso imprese"
+    - "da imprese"
+    - "verso soci"
+    - "verso controllate"
+    - "verso collegate"
+    - "verso controllanti"
+
+# CURRENCY AND NUMERIC PATTERNS
+# Patterns for recognizing currency and numeric values
+numeric_patterns:
+  # Currency indicators
+  currency_symbols:
+    - "€"
+    - "EUR"
+    - "euro"
+    - "migliaia di euro"
+    - "milioni di euro"
+  
+  # Numeric format patterns
+  number_formats:
+    decimal_separator: ","          # Italian decimal separator
+    thousand_separator: "."         # Italian thousand separator
+    negative_indicators: ["(", ")"] # Parentheses for negative values
+    
+  # Value scale indicators
+  scale_indicators:
+    - "migliaia"
+    - "milioni"
+    - "miliardi"
+    - "unità"
+
+# TEXT NORMALIZATION RULES
+# Rules for text normalization and cleaning
+text_normalization:
+  # Characters to replace with spaces
+  replace_with_space:
+    - "\t"                          # Tab characters
+    - "\r"                          # Carriage return
+    - "\n"                          # Newline (when for_matching=True)
+  
+  # Characters to remove completely (when for_matching=True)
+  remove_characters: "[^a-z0-9\\s]"
+  
+  # Multiple spaces replacement
+  space_normalization: "\\s+"       # Replace multiple spaces with single space
+  
+  # Case normalization
+  case_handling: "lowercase"         # Convert to lowercase
+
+# DOCUMENT QUALITY INDICATORS
+# Patterns that indicate document quality and reliability
+quality_indicators:
+  # Positive quality indicators
+  good_quality_markers:
+    - "revisore"                    # Audited statements
+    - "certificato"                 # Certified statements
+    - "approvato"                   # Approved statements
+    - "assemblea"                   # Assembly approved
+  
+  # Quality warning indicators
+  warning_markers:
+    - "bozza"                       # Draft documents
+    - "provvisorio"                 # Provisional documents
+    - "non definitivo"              # Non-final documents
+    - "in corso di approvazione"    # Pending approval
+
+# ERROR HANDLING CONSTANTS
+# Constants used for error handling and validation
+error_handling:
+  # Default values
+  default_numeric_value: 0.0        # Default for failed numeric parsing
+  default_string_value: ""          # Default for failed string processing
+  
+  # Error messages (English)
+  error_messages:
+    parsing_failed: "Failed to parse financial statement"
+    validation_failed: "Validation failed for financial data"
+    table_extraction_failed: "Failed to extract table data"
+    enrichment_failed: "Enrichment process failed"
+    insufficient_data: "Insufficient data for processing"
+
+# OUTPUT FORMATTING CONSTANTS
+# Constants used for output formatting and presentation
+output_formatting:
+  # Decimal places for different value types
+  decimal_places:
+    currency: 2                     # Currency values
+    percentage: 1                   # Percentage values
+    ratios: 3                       # Financial ratios
+  
+  # Date formatting
+  date_formats:
+    standard: "%d/%m/%Y"            # Italian date format
+    iso: "%Y-%m-%d"                 # ISO date format
+    year_only: "%Y"                 # Year only format
+  
+  # Number formatting
+  number_formatting:
+    thousands_separator: "."        # Italian thousands separator
+    decimal_separator: ","          # Italian decimal separator
+    currency_symbol: "€"            # Euro symbol
+    currency_position: "suffix"     # Symbol position
+
+# VALIDATION CONSTANTS
+# Constants used for data validation and consistency checking
+validation_constants:
+  # Tolerance values
+  tolerance_values:
+    mathematical_precision: 0.01    # Mathematical precision tolerance
+    percentage_tolerance: 1.0       # Percentage tolerance (1%)
+    minimum_absolute_tolerance: 2.0 # Minimum absolute tolerance in euros
+  
+  # Validation thresholds
+  validation_thresholds:
+    minimum_balance_sheet_total: 1.0     # Minimum meaningful BS total
+    maximum_reasonable_value: 1e12       # Maximum reasonable value
+    minimum_confidence_score: 70         # Minimum confidence for acceptance
+  
+  # Data completeness requirements
+  completeness_requirements:
+    minimum_items_balance_sheet: 5       # Minimum items in balance sheet
+    minimum_items_income_statement: 3    # Minimum items in income statement
+    required_total_sections: 2           # Minimum required major sections
+
+# SYSTEM METADATA
+# Metadata about the configuration and system
+metadata:
+  # Version information
+  version_info:
+    config_version: "2.0"
+    constants_version: "1.0"
+    last_updated: "2024"
+    compatible_parser_versions: ["1.0", "2.0"]
+  
+  # Language and locale
+  locale_settings:
+    primary_language: "italian"
+    currency_locale: "it_IT"
+    date_locale: "it_IT"
+    numeric_locale: "it_IT"
+  
+  # System capabilities
+  supported_features:
+    - "balance_sheet_parsing"
+    - "income_statement_parsing"
+    - "nota_integrativa_enrichment"
+    - "abbreviated_format_detection"
+    - "temporal_classification"
+    - "related_party_identification"
