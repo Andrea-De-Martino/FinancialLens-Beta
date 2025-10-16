@@ -1,0 +1,66 @@
+# ====================================================================================
+# CONSTANTS CONFIGURATION - Financial Statement Parser System
+#
+# This file contains all string constants, patterns, and text-based configuration
+# used throughout the financial statement parser. It centralizes text patterns,
+# ignore rules, document section names, and other string-based constants to
+# enable easy modification without code changes.
+# ====================================================================================
+
+# DOCUMENT SECTION NAMES
+# Standard section names found in Italian financial statement documents
+raw_text_sections:
+  - 'Rendiconto finanziario'
+  - 'Nota integrativa'             # Supplementary notes section
+  - 'Relazione sulla gestione'     # Management report
+  - 'Relazione del revisore'       # Auditor's report
+  - 'Relazione del Revisore Legale' # Legal auditor's report
+  - 'Relazione del Collegio Sindacale' # Board of auditors report
+  - 'Verbale di assemblea'         # Assembly minutes
+
+# TEXT PATTERNS TO IGNORE
+# Patterns that should be filtered out during financial statement parsing
+ignore_patterns:
+  - 'totale parziale'              # Partial totals
+  - 'subtotale'                    # Subtotals
+  - 'di cui:'                      # "Of which:" indicators
+  - 'di cui'                       # "Of which" indicators
+  - "di cui entro l'esercizio"     # "Of which within the year"
+  - "di cui oltre l'esercizio"     # "Of which beyond the year"
+  - '...'                          # Ellipsis indicators
+  - '-------'                      # Dash separators
+  - '========'                     # Equal sign separators
+  - 'stato patrimoniale'           # Balance sheet headers
+  - 'conto economico'              # Income statement headers
+  - 'rendiconto finanziario'       # Cash flow statement headers
+  - 'attivo'                       # Assets headers
+  - 'passivo'                      # Liabilities headers
+  - 'ammortamenti'                 # Depreciation headers
+  - 'totale crediti'               # Total receivables headers
+  - 'totale debiti'                # Total payables headers
+  - 'totale immobilizzazioni'      # Total fixed assets headers
+
+# DOCUMENT STRUCTURE PATTERNS
+# Regular expression patterns for detecting document structure
+section_detection_patterns:
+  # Main financial statement sections
+  balance_sheet:
+    pattern: "\\b(stato\\s+patrimoniale)\\b"
+    case_sensitive: false
+    description: "Pattern for detecting Balance Sheet sections"
+  
+  income_statement:
+    pattern: "\\b(conto\\s+economico)\\b"
+    case_sensitive: false
+    description: "Pattern for detecting Income Statement sections"
+  
+  cash_flow_statement:
+    pattern: "\\b(rendiconto\\s+finanziario)\\b"
+    case_sensitive: false
+    description: "Pattern for detecting Cash Flow Statement sections"
+  
+  # Document year detection
+  document_year:
+    pattern: "\\b(20\\d{2})\\b"
+    case_sensitive: false
+    description: "Pattern for extracting document year"

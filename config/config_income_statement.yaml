@@ -1,0 +1,339 @@
+# ====================================================================================
+# INCOME STATEMENT CONFIGURATION - Financial Statement Parser System
+#
+# This file contains the complete Income Statement (Conto Economico) schema
+# definition with hierarchical structure, synonyms, and detailed breakdowns.
+# It defines all revenue, cost, and profit components following Italian 
+# accounting standards with comprehensive synonym mappings.
+#
+# The structure follows the Italian Civil Code requirements for income
+# statement presentation and includes all standard line items with
+# alternative text representations found in real-world documents.
+# ====================================================================================
+
+# A) PRODUCTION VALUE
+# Revenue and production-related income components
+'A) Valore della produzione':
+  sinonimi: 
+    - 'A) Valore della produzione'
+    - 'Totale valore della produzione'
+    - 'Totale valore della produzione (A)'
+  dettaglio:
+    'Ricavi delle vendite e delle prestazioni':
+      sinonimi: ['1) ricavi delle vendite e delle prestazioni']
+    
+    'Variazioni delle rimanenze di prodotti in corso di lavorazione, semilavorati e finiti':
+      sinonimi: ['2) variazioni delle rimanenze di prodotti in corso di lavorazione, semilavorati e finiti']
+    
+    'Variazioni dei lavori in corso su ordinazione':
+      sinonimi: ['3) variazioni dei lavori in corso su ordinazione']
+    
+    'Incrementi di immobilizzazioni per lavori interni':
+      sinonimi: ['4) incrementi di immobilizzazioni per lavori interni']
+    
+    'Altri ricavi e proventi':
+      sinonimi: 
+        - '5) altri ricavi e proventi'
+        - 'Totale altri ricavi e proventi'
+      dettaglio:
+        'Contributi in conto esercizio':
+          sinonimi: 
+            - 'di cui contributi in conto esercizio'
+            - 'contributi in conto esercizio'
+        'Altri ricavi':
+          sinonimi: ['altri']
+
+# B) PRODUCTION COSTS
+# All costs related to production and operations
+'B) Costi della produzione':
+  sinonimi: 
+    - 'B) Costi della produzione'
+    - 'Totale costi della produzione'
+    - 'Totale costi della produzione (B)'
+  dettaglio:
+    'Costi per materie prime, sussidiarie, di consumo e di merci':
+      sinonimi: ['6) per materie prime, sussidiarie, di consumo e di merci']
+    
+    'Costi per servizi':
+      sinonimi: ['7) per servizi']
+    
+    'Costi per godimento di beni di terzi':
+      sinonimi: ['8) per godimento di beni di terzi']
+    
+    'Costi per il personale':
+      sinonimi: 
+        - '9) per il personale'
+        - 'Totale costi per il personale'
+      dettaglio:
+        'Salari e stipendi':
+          sinonimi: ['a) salari e stipendi']
+        'Oneri sociali':
+          sinonimi: ['b) oneri sociali']
+        'Trattamento di fine rapporto':
+          sinonimi: ['c) trattamento di fine rapporto']
+        'Trattamento di quiescenza e simili':
+          sinonimi: ['d) trattamento di quiescenza e simili']
+        'Altri costi del personale':
+          sinonimi: ['e) altri costi']
+    
+    'Ammortamenti e svalutazioni':
+      sinonimi: 
+        - '10) ammortamenti e svalutazioni'
+        - 'Totale ammortamenti e svalutazioni'
+      dettaglio:
+        'Ammortamento delle immobilizzazioni immateriali':
+          sinonimi: ['a) ammortamento delle immobilizzazioni immateriali']
+        'Ammortamento delle immobilizzazioni materiali':
+          sinonimi: ['b) ammortamento delle immobilizzazioni materiali']
+        'Altre svalutazioni delle immobilizzazioni':
+          sinonimi: ['c) altre svalutazioni delle immobilizzazioni']
+        'Svalutazioni dei crediti e delle disponibilità liquide':
+          sinonimi: ["d) svalutazioni dei crediti compresi nell'attivo circolante e delle disponibilità liquide"]
+    
+    'Variazioni delle rimanenze di materie prime, sussidiarie, di consumo e merci':
+      sinonimi: 
+        - '11) (variazioni) delle rimanenze di materie prime, sussidiarie, di consumo e merci'
+        - '11) variazioni delle rimanenze di materie prime, sussidiarie, di consumo e merci'
+    
+    'Accantonamenti per rischi':
+      sinonimi: ['12) accantonamenti per rischi']
+    
+    'Altri accantonamenti':
+      sinonimi: ['13) altri accantonamenti']
+    
+    'Oneri diversi di gestione':
+      sinonimi: ['14) oneri diversi di gestione']
+
+# OPERATING RESULT
+# Difference between production value and production costs
+'Differenza tra valore e costi della produzione (A - B)':
+  sinonimi: ['Differenza tra valore e costi della produzione (A - B)']
+
+# C) FINANCIAL INCOME AND EXPENSES
+'C) Proventi e oneri finanziari':
+  sinonimi:
+    - 'C) proventi e oneri finanziari'
+    - 'Totale proventi e oneri finanziari (C)'
+    - 'Totale proventi e oneri finanziari (15 + 16 - 17 + - 17-bis)'
+    - 'Totale proventi e oneri finanziari (15+16-17+-17-bis)'
+  dettaglio:
+    '15) Proventi da partecipazioni':
+      sinonimi:
+        - 'Proventi da partecipazioni'
+      dettaglio:
+        'Proventi da partecipazioni in imprese controllate':
+          sinonimi:
+            - 'da partecipazioni in imprese controllate'
+        'Proventi da partecipazioni in imprese collegate':
+          sinonimi:
+            - 'da partecipazioni in imprese collegate'
+        'Proventi da partecipazioni in imprese diverse':
+          sinonimi:
+            - 'da partecipazioni in imprese diverse'
+            - 'altri'
+
+    '16) Altri proventi finanziari':
+      sinonimi:
+        - 'Altri proventi finanziari'
+      dettaglio:
+        'a) Da crediti iscritti nelle immobilizzazioni':
+          sinonimi:
+            - 'da crediti iscritti nelle immobilizzazioni'
+            - 'Totale proventi finanziari da crediti iscritti nelle immobilizzazioni'
+          dettaglio:
+            'Proventi da crediti verso imprese controllate':
+              sinonimi:
+                - 'da imprese controllate'
+            'Proventi da crediti verso imprese collegate':
+              sinonimi:
+                - 'da imprese collegate'
+            'Proventi da crediti verso imprese controllanti':
+              sinonimi:
+                - 'da imprese controllanti'
+            'Proventi da crediti verso altri':
+              sinonimi:
+                - 'da altri'
+                - 'altri'
+
+        'b) Da titoli iscritti nelle immobilizzazioni che non costituiscono partecipazioni':
+          sinonimi:
+            - 'da titoli iscritti nelle immobilizzazioni che non costituiscono partecipazioni'
+        'c) Da titoli iscritti nell’attivo circolante che non costituiscono partecipazioni':
+          sinonimi:
+            - 'da titoli iscritti nell’attivo circolante che non costituiscono partecipazioni'
+            - 'Totale proventi da titoli'
+        'd) Proventi diversi dai precedenti':
+          sinonimi:
+            - 'proventi diversi dai precedenti'
+            - 'Totale proventi diversi dai precedenti'
+          dettaglio:
+            'Proventi diversi da imprese controllate':
+              sinonimi:
+                - 'da imprese controllate'
+            'Proventi diversi da imprese collegate':
+              sinonimi:
+                - 'da imprese collegate'
+            'Proventi diversi da imprese controllanti':
+              sinonimi:
+                - 'da imprese controllanti'
+            'Proventi diversi da altri':
+              sinonimi:
+                - 'da altri'
+                - 'altri'
+
+    '17) Interessi e altri oneri finanziari':
+      sinonimi:
+        - 'Interessi e altri oneri finanziari'
+        - 'Totale interessi e altri oneri finanziari'
+      dettaglio:
+        'Interessi e oneri verso imprese controllate':
+          sinonimi:
+            - 'verso imprese controllate'
+        'Interessi e oneri verso imprese collegate':
+          sinonimi:
+            - 'verso imprese collegate'
+        'Interessi e oneri verso imprese controllanti':
+          sinonimi:
+            - 'verso imprese controllanti'
+        'Interessi e oneri verso altri':
+          sinonimi:
+            - 'verso altri'
+            - 'altri'
+
+    '17-bis) Utile (perdita) su cambi':
+      sinonimi:
+        - 'Utile (perdita) su cambi'
+        - 'utili e perdite su cambi'
+
+# D) VALUE ADJUSTMENTS TO FINANCIAL ASSETS
+# Adjustments to financial asset valuations
+'D) Rettifiche di valore di attività finanziarie':
+  sinonimi: 
+    - 'D) Rettifiche di valore di attività finanziarie'
+    - 'Totale rettifiche di valore attività finanziarie (D)'
+  dettaglio:
+    'Rivalutazioni':
+      sinonimi: 
+        - '18) rivalutazioni'
+        - 'Totale rivalutazioni'
+      dettaglio:
+        'Rivalutazioni di partecipazioni':
+          sinonimi: ['a) di partecipazioni']
+        'Rivalutazioni di immobilizzazioni finanziarie che non costituiscono partecipazioni':
+          sinonimi: ['b) di immobilizzazioni finanziarie che non costituiscono partecipazioni']
+        'Rivalutazioni di titoli iscritti nell''attivo circolante che non costituiscono partecipazioni':
+          sinonimi: ['c) di titoli iscritti nell''attivo circolante che non costituiscono partecipazioni']
+        'Rivalutazioni di strumenti finanziari derivati':
+          sinonimi: ['d) di strumenti finanziari derivati']
+    
+    'Svalutazioni':
+      sinonimi: 
+        - '19) svalutazioni'
+        - 'Totale svalutazioni'
+      dettaglio:
+        'Svalutazioni di partecipazioni':
+          sinonimi: ['a) di partecipazioni']
+        'Svalutazioni di immobilizzazioni finanziarie che non costituiscono partecipazioni':
+          sinonimi: ['b) di immobilizzazioni finanziarie che non costituiscono partecipazioni']
+        'Svalutazioni di titoli iscritti nell''attivo circolante che non costituiscono partecipazioni':
+          sinonimi: ['c) di titoli iscritti nell''attivo circolante che non costituiscono partecipazioni']
+        'Svalutazioni di strumenti finanziari derivati':
+          sinonimi: ['d) di strumenti finanziari derivati']
+
+# E) EXTRAORDINARY INCOME AND EXPENSES
+# Non-recurring extraordinary items
+'E) Proventi e oneri straordinari':
+  sinonimi: 
+    - 'E) Proventi e oneri straordinari'
+    - 'Totale proventi e oneri straordinari (E)'
+  dettaglio:
+    'Proventi straordinari':
+      sinonimi: 
+        - '20) proventi straordinari'
+        - 'Totale proventi straordinari'
+      dettaglio:
+        'Plusvalenze da alienazioni':
+          sinonimi: ['plusvalenze da alienazioni']
+        'Altri proventi straordinari':
+          sinonimi: ['altri']
+    
+    'Oneri straordinari':
+      sinonimi: 
+        - '21) oneri straordinari'
+        - 'Totale oneri straordinari'
+      dettaglio:
+        'Minusvalenze da alienazioni':
+          sinonimi: ['minusvalenze da alienazioni']
+        'Altri oneri straordinari':
+          sinonimi: ['altri']
+
+# PRE-TAX RESULT
+# Result before income tax calculation
+'Risultato prima delle imposte':
+  sinonimi: 
+    - 'Risultato prima delle imposte'
+    - 'Risultato prima delle imposte (A-B + C + D + E)'
+    - 'Risultato prima delle imposte (A - B + - C + - D)'
+
+# INCOME TAXES
+# Current, deferred and prepaid income taxes
+'Imposte sul reddito dell''esercizio':
+  sinonimi: 
+    - "imposte sul reddito dell'esercizio"
+    - "22) imposte sul reddito dell'esercizio"
+    - "20) Imposte sul reddito dell'esercizio, correnti, differite e anticipate"
+    - "Totale delle imposte sul reddito dell'esercizio, correnti, differite e anticipate"
+  dettaglio:
+    'Imposte correnti':
+      sinonimi: 
+        - 'imposte correnti'
+        - 'a) correnti'
+    'Imposte relative a esercizi precedenti':
+      sinonimi: 
+        - 'imposte relative a esercizi precedenti'
+        - 'b) relative a esercizi precedenti'
+    'Imposte differite e anticipate':
+      sinonimi: 
+        - 'imposte differite e anticipate'
+        - 'c) differite e anticipate'
+      dettaglio:
+        'Imposte differite':
+          sinonimi: ['imposte differite']
+        'Imposte anticipate':
+          sinonimi: ['imposte anticipate']
+
+    'Proventi (oneri) da adesione al regime di consolidato fiscale':
+      sinonimi:
+        - 'proventi (oneri) da adesione al regime di consolidato fiscale / trasparenza fiscale'
+        - 'proventi (oneri) da adesione al regime di consolidato fiscale'
+        - 'trasparenza fiscale'
+        - 'Proventi (oneri) da adesione al regime di consolidato fiscale / trasparenza fiscale'
+        - 'Proventi (oneri) da adesione al regime di consolidato fiscale'
+
+# NET RESULT
+# Final profit or loss for the period
+'Utile (perdita) dell''esercizio':
+  sinonimi: 
+    - "Utile (perdita) dell'esercizio"
+    - "28) utile (perdita) di pertinenza del gruppo"
+    - "21) Utile (perdita) dell'esercizio"
+    - "Utile (perdita) consolidati dell'esercizio"    
+    - "21) Utile (perdita) consolidati dell'esercizio"   
+    - "Utile consolidato dell'esercizio"             
+    - "Perdita consolidata dell'esercizio"  
+
+'Risultato di pertinenza del gruppo':
+  sinonimi:
+    - 'Risultato di pertinenza del gruppo'
+
+'Risultato di pertinenza di terzi':
+  sinonimi:
+    - 'Risultato di pertinenza di terzi'
+
+# ADDITIONAL RESULT COMPONENTS
+# Additional profit/loss components for specific accounting situations
+'Utile (perdita) dell''esercizio di pertinenza del gruppo':
+  sinonimi: ["Utile (perdita) dell'esercizio di pertinenza del gruppo"]
+
+'Utile (perdita) dell''esercizio di pertinenza di terzi':
+  sinonimi: ["Utile (perdita) dell'esercizio di pertinenza di terzi"]

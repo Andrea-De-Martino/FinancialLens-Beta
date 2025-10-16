@@ -1,0 +1,719 @@
+# ====================================================================================
+# BALANCE SHEET CONFIGURATION - Financial Statement Parser System
+#
+# This file contains the complete Balance Sheet (Stato Patrimoniale) schema
+# definition with hierarchical structure, synonyms, and detailed breakdowns.
+# It defines both Assets (Attivo) and Liabilities (Passivo) sections with 
+# all their sub-components and alternative text representations.
+#
+# The structure follows Italian accounting standards and includes comprehensive
+# synonym mappings to handle textual variations found in real-world documents.
+# ====================================================================================
+
+# ASSETS SECTION (ATTIVO)
+# Complete hierarchical definition of all asset categories with detailed breakdowns
+attivo:
+  # TOTAL ASSETS
+  'Totale Attivo':
+    sinonimi: 
+      - 'Totale attivo'
+      - 'Totale ATTIVO (A+B+C+D)'
+
+  # A) SHAREHOLDERS' RECEIVABLES FOR UNPAID CONTRIBUTIONS
+  'A) Crediti verso soci per versamenti ancora dovuti':
+    sinonimi: 
+      - 'A) Crediti verso soci per versamenti ancora dovuti'
+      - 'Totale crediti verso soci per versamenti ancora dovuti (A)'
+    dettaglio:
+      'Crediti verso Soci per versamenti ancora dovuti già richiamati':
+        sinonimi: 
+          - 'Crediti verso Soci per versamenti ancora dovuti già richiamati'
+          - 'Parte richiamata'
+      'Crediti verso Soci per versamenti ancora dovuti non richiamati':
+        sinonimi: 
+          - 'Crediti verso Soci per versamenti ancora dovuti non richiamati'
+          - 'Parte da richiamare'
+
+  # B) FIXED ASSETS
+  'B) Immobilizzazioni':
+    sinonimi: 
+      - 'B) Immobilizzazioni'
+      - 'Totale immobilizzazioni (B)'
+    dettaglio:
+      # I - INTANGIBLE ASSETS
+      'I - Immobilizzazioni immateriali':
+        sinonimi: 
+          - 'I - Immobilizzazioni immateriali'
+          - '1- Immobilizzazioni immateriali'
+          - 'Totale immobilizzazioni immateriali'
+        dettaglio:
+          'Costi di impianto e di ampliamento':
+            sinonimi: ['1) costi di impianto e di ampliamento']
+          'Costi di sviluppo':
+            sinonimi: 
+              - '2) costi di sviluppo'
+              - 'costi di ricerca'
+              - 'costi di pubblicità'
+              - 'costi di sviluppo (di ricerca) (e di pubblicità)'
+          'Diritti di brevetto industriale e di utilizzazione opere dell''ingegno':
+            sinonimi: ["3) diritti di brevetto industriale e di utilizzazione opere dell'ingegno"]
+          'Concessioni, licenze, marchi e diritti simili':
+            sinonimi: ['4) concessioni, licenze, marchi e diritti simili']
+          'Avviamento':
+            sinonimi: 
+              - '5) avviamento'
+              - 'avviamento, differenza da consolidamento ed avanzo di fusione'
+          'Immobilizzazioni in corso e acconti':
+            sinonimi: ['6) immobilizzazioni in corso e acconti']
+          'Altre immobilizzazioni immateriali':
+            sinonimi: 
+              - '7) altre immobilizzazioni immateriali'
+              - '7) altre'
+
+      # II - TANGIBLE ASSETS
+      'II - Immobilizzazioni materiali':
+        sinonimi: 
+          - 'II - Immobilizzazioni materiali'
+          - 'II- Immobilizzazioni materiali'
+          - 'Totale immobilizzazioni materiali'
+        dettaglio:
+          'Terreni e fabbricati':
+            sinonimi: ['1) terreni e fabbricati']
+          'Impianti e macchinario':
+            sinonimi: ['2) impianti e macchinario']
+          'Attrezzature industriali e commerciali':
+            sinonimi: ['3) attrezzature industriali e commerciali']
+          'Altri beni':
+            sinonimi: ['4) altri beni']
+          'Immobilizzazioni materiali in corso e acconti':
+            sinonimi: ['5) immobilizzazioni in corso e acconti']
+
+      # III - FINANCIAL ASSETS
+      'III - Immobilizzazioni finanziarie':
+        sinonimi: 
+          - 'III - Immobilizzazioni finanziarie'
+          - 'Totale immobilizzazioni finanziarie'
+        dettaglio:
+          'Partecipazioni (Immobilizzazioni)':
+            sinonimi: 
+              - '1) partecipazioni'
+              - '1) partecipazioni in'
+            dettaglio:
+              'Partecipazioni in imprese controllate':
+                sinonimi: ['a) imprese controllate']
+              'Partecipazioni in imprese collegate':
+                sinonimi: ['b) imprese collegate']
+              'Partecipazioni in imprese controllanti':
+                sinonimi: ['c) imprese controllanti']
+              'Partecipazioni in imprese sottoposte al controllo delle controllanti':
+                sinonimi: ['d) imprese sottoposte al controllo delle controllanti']
+              'Partecipazioni in altre imprese':
+                sinonimi: 
+                  - 'd) bis altre imprese'
+                  - 'd-bis) altre imprese'
+
+          'Crediti (Immobilizzazioni)':
+            sinonimi: ['2) crediti']
+            dettaglio:
+              'Crediti verso imprese controllate':
+                sinonimi: ['a) verso imprese controllate']
+                dettaglio:
+                  'Crediti immobilizzati verso controllate esigibili entro l''esercizio successivo':
+                    sinonimi: ["esigibili entro l'esercizio successivo"]
+                  'Crediti immobilizzati verso controllate esigibili oltre l''esercizio successivo':
+                    sinonimi: ["esigibili oltre l'esercizio successivo"]
+
+              'Crediti verso imprese collegate':
+                sinonimi: ['b) verso imprese collegate']
+                dettaglio:
+                  'Crediti immobilizzati verso collegate esigibili entro l''esercizio successivo':
+                    sinonimi: ["esigibili entro l'esercizio successivo"]
+                  'Crediti immobilizzati verso collegate esigibili oltre l''esercizio successivo':
+                    sinonimi: ["esigibili oltre l'esercizio successivo"]
+
+              'Crediti verso controllanti':
+                sinonimi: ['c) verso controllanti']
+                dettaglio:
+                  'Crediti immobilizzati verso controllanti esigibili entro l''esercizio successivo':
+                    sinonimi: ["esigibili entro l'esercizio successivo"]
+                  'Crediti immobilizzati verso controllanti esigibili oltre l''esercizio successivo':
+                    sinonimi: ["esigibili oltre l'esercizio successivo"]
+
+              'Crediti verso altri (Immobilizzazioni)':
+                sinonimi: 
+                  - 'd) bis verso altri'
+                  - 'd-bis) verso altri'
+                dettaglio:
+                  'Crediti immobilizzati verso altri esigibili entro l''esercizio successivo':
+                    sinonimi: ["esigibili entro l'esercizio successivo"]
+                  'Crediti immobilizzati verso altri esigibili oltre l''esercizio successivo':
+                    sinonimi: ["esigibili oltre l'esercizio successivo"]
+
+          'Altri titoli':
+            sinonimi: ['3) altri titoli']
+          'Strumenti finanziari derivati attivi (Immobilizzazioni)':
+            sinonimi: ['4) strumenti finanziari derivati attivi']
+          'Azioni proprie (Immobilizzazioni)':
+            sinonimi: ['azioni proprie']
+
+  # C) CURRENT ASSETS
+  'C) Attivo circolante':
+    sinonimi: 
+      - 'C) Attivo circolante'
+      - 'Totale attivo circolante (C)'
+    dettaglio:
+      # I - INVENTORY
+      'I - Rimanenze':
+        sinonimi: 
+          - 'I - Rimanenze'
+          - 'I- Rimanenze'
+          - 'Totale rimanenze'
+        dettaglio:
+          'Materie prime, sussidiarie e di consumo':
+            sinonimi: ['1) materie prime, sussidiarie e di consumo']
+          'Prodotti in corso di lavorazione e semilavorati':
+            sinonimi: ['2) prodotti in corso di lavorazione e semilavorati']
+          'Lavori in corso su ordinazione':
+            sinonimi: ['3) lavori in corso su ordinazione']
+          'Prodotti finiti e merci':
+            sinonimi: ['4) prodotti finiti e merci']
+          'Acconti (Rimanenze)':
+            sinonimi: ['5) acconti']
+      # II - RECEIVABLES
+      'II - Crediti':
+        sinonimi: 
+          - 'II - Crediti'
+          - 'Totale crediti'
+        dettaglio:
+          'Crediti verso clienti':
+            sinonimi: 
+              - '1) verso clienti'
+              - 'Totale crediti verso clienti'
+            dettaglio:
+              'Crediti verso clienti esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti verso clienti esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+
+          'Crediti verso imprese controllate (Attivo Circolante)':
+            sinonimi: 
+              - '2) verso imprese controllate'
+              - 'Totale crediti verso imprese controllate'
+            dettaglio:
+              'Crediti verso controllate esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti verso controllate esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+
+          'Crediti verso imprese collegate (Attivo Circolante)':
+            sinonimi: 
+              - '3) verso imprese collegate'
+              - 'Totale crediti verso imprese collegate'
+            dettaglio:
+              'Crediti verso collegate esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti verso collegate esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+
+          'Crediti verso controllanti (Attivo Circolante)':
+            sinonimi: 
+              - '4) verso controllanti'
+              - 'Totale crediti verso controllanti'
+            dettaglio:
+              'Crediti verso controllanti esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti verso controllanti esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+
+          'Crediti verso imprese sottoposte al controllo delle controllanti (Attivo Circolante)':
+            sinonimi: 
+              - '5) verso imprese sottoposte al controllo delle controllanti'
+              - 'Totale crediti verso imprese sottoposte al controllo delle controllanti'
+            dettaglio:
+              'Crediti verso imprese sottoposte al controllo delle controllanti esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti verso imprese sottoposte al controllo delle controllanti esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+
+          'Crediti tributari':
+            sinonimi: 
+              - '5 bis) tributari'
+              - '5-bis) crediti tributari'
+              - 'Totale crediti tributari'
+            dettaglio:
+              'Crediti tributari esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti tributari esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+
+          'Crediti per imposte anticipate':
+            sinonimi: 
+              - '5 ter) per imposte anticipate'
+              - '5-ter) imposte anticipate'
+              - 'crediti per imposte anticipate'
+            dettaglio:
+              'Crediti per imposte anticipate esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti per imposte anticipate esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+                  
+          'Crediti verso altri (Attivo Circolante)':
+            sinonimi: 
+              - '5 quater verso altri'
+              - '5-quater) verso altri'
+              - 'Totale crediti verso altri'
+            dettaglio:
+              'Crediti verso altri esigibili entro l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili entro l'esercizio successivo"
+                  - "esigibili entro l'esercizio successivo"
+              'Crediti verso altri esigibili oltre l''esercizio successivo':
+                sinonimi: 
+                  - "importi esigibili oltre l'esercizio successivo"
+                  - "esigibili oltre l'esercizio successivo"
+
+          # Generic temporal classifications for abbreviated format
+          'Crediti (importo esigibile entro l''esercizio successivo)':
+            sinonimi: ["esigibili entro l'esercizio successivo"]
+          'Crediti (importo esigibile oltre l''esercizio successivo)':
+            sinonimi: ["esigibili oltre l'esercizio successivo"]
+
+      # III - FINANCIAL ASSETS
+      'III - Attività finanziarie che non costituiscono immobilizzazioni':
+        sinonimi: 
+          - 'III - Attività finanziarie che non costituiscono immobilizzazioni'
+          - 'Totale attività finanziarie che non costituiscono immobilizzazioni'
+        dettaglio:
+          'Partecipazioni in imprese controllate (Attivo Circolante)':
+            sinonimi: ['1) partecipazioni in imprese controllate']
+          'Partecipazioni in imprese collegate (Attivo Circolante)':
+            sinonimi: ['2) partecipazioni in imprese collegate']
+          'Partecipazioni in imprese controllanti (Attivo Circolante)':
+            sinonimi: 
+              - '3) partecipazioni in imprese controllanti'
+              - '3-bis) partecipazioni in imprese controllanti'
+          'Altre partecipazioni':
+            sinonimi: ['4) altre partecipazioni']
+          'Azioni proprie (Attivo Circolante)':
+            sinonimi: ['5) azioni proprie']
+          'Strumenti finanziari derivati attivi (Attivo Circolante)':
+            sinonimi: ['5) strumenti finanziari derivati attivi']
+          'Altri titoli (Attivo Circolante)':
+            sinonimi: ['6) altri titoli']
+          'Attività finanziarie per la gestione accentrata della tesoreria':
+            sinonimi:
+              - 'attività finanziarie per la gestione accentrata della tesoreria'
+              - 'Attività finanziarie per la gestione accentrata della tesoreria'
+
+      # IV - CASH AND CASH EQUIVALENTS
+      'IV - Disponibilità liquide':
+        sinonimi: 
+          - 'IV - Disponibilità liquide'
+          - 'Totale disponibilità liquide'
+        dettaglio:
+          'Depositi bancari e postali':
+            sinonimi: ['1) depositi bancari e postali']
+          'Assegni':
+            sinonimi: ['2) assegni']
+          'Danaro e valori in cassa':
+            sinonimi: ['3) danaro e valori in cassa']
+
+  'Immobilizzazioni materiali destinate alla vendita':
+    sinonimi:
+      - 'Immobilizzazioni materiali destinate alla vendita'
+
+  # D) ACCRUALS AND DEFERRALS
+  'D) Ratei e risconti attivi':
+    sinonimi: 
+      - 'D) Ratei e risconti attivi'
+      - 'D) Ratei e risconti'
+      - 'Totale ratei e risconti attivi'
+      - 'Totale ratei e risconti (D)'
+
+# LIABILITIES SECTION (PASSIVO)
+# Complete hierarchical definition of all liability categories with detailed breakdowns
+passivo:
+  # TOTAL LIABILITIES
+  'Totale Passivo':
+    sinonimi: 
+      - 'Totale passivo'
+      - 'Totale PASSIVO (A+B+C+D+E)'
+
+  # A) SHAREHOLDERS' EQUITY
+  'A) Patrimonio netto':
+    sinonimi: 
+      - 'A) Patrimonio netto'
+      - 'Totale patrimonio netto'
+      - 'Totale patrimonio netto (A)'
+      - 'A) Patrimonio netto di gruppo'        
+      - 'Patrimonio netto di gruppo'          
+      - 'Totale patrimonio netto di gruppo'  
+    dettaglio:
+      'I - Capitale':
+        sinonimi: 
+          - 'I - Capitale sociale'
+          - 'I - Capitale'
+          - '- Capitale'
+      'II - Riserva da soprapprezzo delle azioni':
+        sinonimi: 
+          - 'II - Riserva da sovrapprezzo delle azioni'
+          - 'II- Riserva da soprapprezzo delle azioni'
+      'III - Riserva di rivalutazione':
+        sinonimi: 
+          - 'III - Riserva di rivalutazione'
+          - 'III - Riserve di rivalutazione'
+      'IV - Riserva legale':
+        sinonimi: 
+          - 'IV - Riserva legale'
+          - 'IV- Riserva legale'
+      'V - Riserve statutarie':
+        sinonimi: 
+          - 'V - Riserve statutarie'
+          - 'V-Riserve statutarie'
+      'VI - Altre riserve':
+        sinonimi: 
+          - 'VI - Altre riserve, distintamente indicate'
+          - 'VI - Altre riserve'
+          - 'Totale altre riserve'
+        dettaglio:
+          'Riserva straordinaria':
+            sinonimi: ['Riserva straordinaria']
+          'Riserva da deroghe ex articolo 2423 codice civile':
+            sinonimi: ['Riserva da deroghe ex articolo 2423 codice civile']
+          'Riserva azioni (quote) della società controllante':
+            sinonimi: 
+              - 'Riserva azioni (quote) della società controllante'
+              - 'Riserva azioni quote della società controllante'
+          'Riserva da rivalutazione delle partecipazioni':
+            sinonimi: ['Riserva da rivalutazione delle partecipazioni']
+          'Riserva per utili su cambi non realizzati':
+            sinonimi: ['Riserva per utili su cambi non realizzati']
+          'Versamenti in conto aumento di capitale':
+            sinonimi: ['Versamenti in conto aumento di capitale']
+          'Versamenti in conto futuro aumento di capitale':
+            sinonimi: ['Versamenti in conto futuro aumento di capitale']
+          'Versamenti in conto capitale':
+            sinonimi: ['Versamenti in conto capitale']
+          'Versamenti a copertura perdite':
+            sinonimi: ['Versamenti a copertura perdite']
+          'Riserva di consolidamento':
+            sinonimi: 
+              - 'Riserva di consolidamento' 
+          'Riserva da differenze di traduzione':
+            sinonimi: 
+              - 'Riserva da differenze di traduzione'
+              - 'Riserva da differenze di conversione'
+          'Riserva da riduzione capitale sociale':
+            sinonimi: ['Riserva da riduzione capitale sociale']
+          'Riserva avanzo di fusione':
+            sinonimi: ['Riserva avanzo di fusione']
+          'Riserva per utili su cambi non realizzati':
+            sinonimi: ['Riserva per utili su cambi non realizzati']
+          'Riserva da conguaglio utili in corso':
+            sinonimi: ['Riserva da conguaglio utili in corso']
+          'Varie altre riserve':
+            sinonimi: ['Varie altre riserve']
+      'VII - Riserva per operazioni di copertura dei flussi finanziari attesi':
+        sinonimi: ['VII - Riserva per operazioni di copertura dei flussi finanziari attesi']
+      'VIII - Utili (Perdite) portati a nuovo':
+        sinonimi: ['VIII - Utili (Perdite) portati a nuovo']
+      'IX - Utile (perdita) dell''esercizio':
+        sinonimi: ["IX - Utile (Perdita) dell'esercizio"]
+      'Perdita ripianata nell''esercizio':
+        sinonimi: ["Perdita ripianata nell'esercizio"]
+      'X - Riserva negativa per azioni proprie in portafoglio':
+        sinonimi: ['X - Riserva negativa per azioni proprie in portafoglio']
+
+  'Patrimonio netto di terzi':
+    sinonimi: 
+      - 'Patrimonio netto di terzi'
+      - 'Totale patrimonio netto di terzi'
+    dettaglio:
+      'Capitale e riserve di terzi':
+        sinonimi: 
+          - 'Capitale e riserve di terzi'
+      'Utile (perdita) di terzi':
+        sinonimi: 
+          - 'Utile (perdita) di terzi'
+          - 'Utile di terzi'
+          - 'Perdita di terzi'
+
+  # B) PROVISIONS FOR RISKS AND CHARGES
+  'B) Fondi per rischi e oneri':
+    sinonimi: 
+      - 'B) Fondi per rischi e oneri'
+      - 'Totale Fondi per rischi e oneri (B)'
+    dettaglio:
+      'Fondo per trattamento di quiescenza e obblighi simili':
+        sinonimi: ['1) per trattamento di quiescenza e obblighi simili']
+      'Fondo per imposte anche differite':
+        sinonimi: ['2) per imposte anche differite']
+      'Strumenti finanziari derivati passivi':
+        sinonimi: ['3) strumenti finanziari derivati passivi']
+      fondo di consolidamento per rischi e oneri futuri':
+        sinonimi: ['fondo di consolidamento per rischi e oneri futuri']
+      'Altri fondi':
+        sinonimi: ['4) altri (e fondo di consolidamento)']
+
+  # C) EMPLOYEE SEVERANCE FUND
+  'C) Trattamento di fine rapporto di lavoro subordinato':
+    sinonimi: ['C) Trattamento di fine rapporto di lavoro subordinato']
+
+  # D) PAYABLES
+  'D) Debiti':
+    sinonimi: 
+      - 'D) Debiti'
+      - 'Totale debiti'
+      - 'Totale Debiti (D)'
+    dettaglio:
+      'Obbligazioni':
+        sinonimi: 
+          - '1) obbligazioni'
+          - 'Totale obbligazioni'
+        dettaglio:
+          'Obbligazioni esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Obbligazioni esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Obbligazioni convertibili':
+        sinonimi: 
+          - '2) obbligazioni convertibili'
+          - 'Totale obbligazioni convertibili'
+        dettaglio:
+          'Obbligazioni convertibili esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Obbligazioni convertibili esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso soci per finanziamenti':
+        sinonimi: 
+          - '3) debiti verso soci per finanziamenti'
+          - 'Totale debiti verso soci per finanziamenti'
+        dettaglio:
+          'Debiti verso soci per finanziamenti esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso soci per finanziamenti esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso banche':
+        sinonimi: 
+          - '4) debiti verso banche'
+          - 'Totale debiti verso banche'
+        dettaglio:
+          'Debiti verso banche esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso banche esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso altri finanziatori':
+        sinonimi: 
+          - '5) debiti verso altri finanziatori'
+          - 'Totale debiti verso altri finanziatori'
+        dettaglio:
+          'Debiti verso altri finanziatori esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso altri finanziatori esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Acconti':
+        sinonimi: 
+          - '6) acconti'
+          - 'Totale acconti'
+        dettaglio:
+          'Acconti esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Acconti esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso fornitori':
+        sinonimi: 
+          - '7) debiti verso fornitori'
+          - 'Totale debiti verso fornitori'
+        dettaglio:
+          'Debiti verso fornitori esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso fornitori esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti rappresentati da titoli di credito':
+        sinonimi: 
+          - '8) debiti rappresentati da titoli di credito'
+          - 'Totale debiti rappresentati da titoli di credito'
+        dettaglio:
+          'Debiti rappresentati da titoli di credito esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti rappresentati da titoli di credito esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso imprese controllate':
+        sinonimi: 
+          - '9) debiti verso imprese controllate'
+          - 'Totale debiti verso imprese controllate'
+        dettaglio:
+          'Debiti verso imprese controllate esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso imprese controllate esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso imprese collegate':
+        sinonimi: 
+          - '10) debiti verso imprese collegate'
+          - 'Totale debiti verso imprese collegate'
+        dettaglio:
+          'Debiti verso imprese collegate esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso imprese collegate esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso controllanti':
+        sinonimi: 
+          - '11) debiti verso controllanti'
+          - 'Totale debiti verso controllanti'
+        dettaglio:
+          'Debiti verso controllanti esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso controllanti esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso imprese sottoposte al controllo delle controllanti':
+        sinonimi: 
+          - '11-bis) debiti verso imprese sottoposte al controllo delle controllanti'
+          - 'Totale debiti verso imprese sottoposte al controllo delle controllanti'
+        dettaglio:
+          'Debiti verso imprese sottoposte al controllo delle controllanti esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso imprese sottoposte al controllo delle controllanti esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti tributari':
+        sinonimi: 
+          - '12) debiti tributari'
+          - 'Totale debiti tributari'
+        dettaglio:
+          'Debiti tributari esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti tributari esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Debiti verso istituti di previdenza e di sicurezza sociale':
+        sinonimi: 
+          - '13) debiti verso istituti di previdenza e di sicurezza sociale'
+          - 'Totale debiti verso istituti di previdenza e di sicurezza sociale'
+        dettaglio:
+          'Debiti verso istituti di previdenza esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Debiti verso istituti di previdenza esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      'Altri debiti':
+        sinonimi: 
+          - '14) altri debiti'
+          - 'Totale altri debiti'
+        dettaglio:
+          'Altri debiti esigibili entro l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili entro l'esercizio successivo"
+              - "esigibili entro l'esercizio successivo"
+          'Altri debiti esigibili oltre l''esercizio successivo':
+            sinonimi: 
+              - "importi esigibili oltre l'esercizio successivo"
+              - "esigibili oltre l'esercizio successivo"
+
+      # Generic temporal classifications for abbreviated format
+      'Debiti (importo esigibile entro l''esercizio successivo)':
+        sinonimi: ["esigibili entro l'esercizio successivo"]
+      'Debiti (importo esigibile oltre l''esercizio successivo)':
+        sinonimi: ["esigibili oltre l'esercizio successivo"]
+
+  # E) ACCRUALS AND DEFERRALS
+  'E) Ratei e risconti passivi':
+    sinonimi: 
+      - 'E) Ratei e risconti passivi'
+      - 'E) Ratei e risconti'
+      - 'Totale ratei e risconti passivi'
+      - 'Totale Ratei e risconti (E)'
