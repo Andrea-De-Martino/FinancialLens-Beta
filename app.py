@@ -579,7 +579,7 @@ def create_about_section():
         
         st.markdown("#### 📄 Supported Documents")
         st.markdown("""
-        - **Type**: Italian Standalone or Consolidated) OIC annual financial statements
+        - **Type**: Italian Standalone or Consolidated OIC annual financial statements
         - **Format**: PDF with **digitally selectable text** (not scanned images)
         - **Layout**:
           - Generated from **XBRL filings**, typically downloaded from official sources such as InfoCamere, Cerved, or Registro Imprese
@@ -595,9 +595,9 @@ def create_about_section():
         st.markdown("""
         This parser currently supports the following statement formats (Only OIC):
         - **"Bilancio Consolidato"**                    
-        - **"Bilancio sintetico"** – summary format without explanatory notes
+        - **"Bilancio esteso"**
         - **"Bilancio abbreviato"** – abbreviated format (Art. 2435-bis)
-        - **"Bilancio sintetico con dettaglio in Nota Integrativa"** – summary format with receivables and payables detailed in the Notes section
+        - **"Bilancio abbreviato con dettaglio in Nota Integrativa"** – summary format with receivables and payables detailed in the Notes section
         """)
         
         st.markdown("#### 🧪 Experimental Compatibility")
@@ -1553,4 +1553,5 @@ def main():
     handle_reset_confirmation()
 
 if __name__ == "__main__":
+
     main()
