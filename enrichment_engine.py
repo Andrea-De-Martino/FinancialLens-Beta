@@ -102,10 +102,18 @@ class EnrichmentEngine:
         """
         logging.info(f"Nota Integrativa found starting at page {start_page + 1}")
         
+        # Extract Crediti commerciali from NI text for abbreviated format
+        self._process_crediti_commerciali_from_text(data_map, pdf, start_page)
+
         for section_name, rules in self.enrichment_rules.items():
             if section_name not in data_map:
                 continue
-                
+
+            # Skip if already enriched from text extraction
+            if data_map[section_name].get('skip_standard_enrichment', False):
+                logging.info(f"  ⏭️  Skipping '{section_name}' - already enriched from NI text")
+                continue
+
             logging.info(f"\n--- Processing enrichment section: '{section_name}' ---")
             
             # Find and merge tables that may span multiple pages
@@ -644,6 +652,165 @@ class EnrichmentEngine:
             text_str = re.sub(r'[^a-z0-9\s]', '', text_str)
         
         return re.sub(r'\s+', ' ', text_str.strip())
+
+    def _process_crediti_commerciali_from_text(self, 
+                                              data_map: Dict[str, Dict],
+                                              pdf: pdfplumber.PDF, 
+                                              start_page: int) -> None:
+        """
+        Process Crediti Commerciali from NI text and create proper breakdown.
+        
+        Extracts "Crediti commerciali" value from Nota Integrativa descriptive text
+        and creates hierarchical breakdown under "II - Crediti":
+        - Crediti verso clienti (with "entro l'esercizio" detail)
+        - Crediti verso altri (with remaining "entro" and all "oltre")
+        
+        Args:
+            data_map: Current financial data map
+            pdf: PDF document object
+            start_page: Starting page of Nota Integrativa
+        """
+        if 'II - Crediti' not in data_map:
+            return
+        
+        crediti_node = data_map['II - Crediti']
+        
+        if '_dettaglio_scadenza' not in crediti_node:
+            return
+        
+        dettaglio_scadenza = crediti_node['_dettaglio_scadenza']
+        entro_totale = dettaglio_scadenza.get('entro', 0.0)
+        oltre_totale = dettaglio_scadenza.get('oltre', 0.0)
+        
+        if entro_totale == 0.0:
+            return
+        
+        crediti_commerciali_value = self._extract_crediti_commerciali_from_text(pdf, start_page)
+        
+        if crediti_commerciali_value is None:
+            return
+        
+        if crediti_commerciali_value > entro_totale:
+            logging.warning(
+                f"  ⚠️  Crediti commerciali ({crediti_commerciali_value:,.2f}€) exceeds "
+                f"total 'entro l'esercizio' ({entro_totale:,.2f}€). Skipping breakdown."
+            )
+            return
+        
+        crediti_altri_entro = entro_totale - crediti_commerciali_value
+        crediti_altri_oltre = oltre_totale
+        
+        if 'dettaglio' not in crediti_node:
+            crediti_node['dettaglio'] = {}
+        
+        # Create "Crediti verso clienti" with maturity detail
+        crediti_node['dettaglio']['Crediti verso clienti'] = {
+            'voce_canonica': 'Crediti verso clienti',
+            'valore': crediti_commerciali_value,
+            'enriched_from_ni_text': True,
+            'dettaglio': {
+                'Crediti verso clienti esigibili entro l\'esercizio successivo': {
+                    'voce_canonica': 'Crediti verso clienti esigibili entro l\'esercizio successivo',
+                    'valore': crediti_commerciali_value,
+                    'enriched_from_ni_text': True
+                }
+            }
+        }
+        
+        # Create "Crediti verso altri (Attivo Circolante)" with maturity details
+        crediti_node['dettaglio']['Crediti verso altri (Attivo Circolante)'] = {
+            'voce_canonica': 'Crediti verso altri (Attivo Circolante)',
+            'valore': crediti_altri_entro + crediti_altri_oltre,
+            'enriched_from_ni_text': True,
+            'dettaglio': {
+                'Crediti verso altri esigibili entro l\'esercizio successivo': {
+                    'voce_canonica': 'Crediti verso altri esigibili entro l\'esercizio successivo',
+                    'valore': crediti_altri_entro,
+                    'enriched_from_ni_text': True
+                },
+                'Crediti verso altri esigibili oltre l\'esercizio successivo': {
+                    'voce_canonica': 'Crediti verso altri esigibili oltre l\'esercizio successivo',
+                    'valore': crediti_altri_oltre,
+                    'enriched_from_ni_text': True
+                }
+            }
+        }
+        
+        # Mark as enriched and remove _dettaglio_scadenza to prevent generic entries
+        crediti_node['enriched_from_ni_text'] = True
+        crediti_node['skip_standard_enrichment'] = True
+        
+        if '_dettaglio_scadenza' in crediti_node:
+            del crediti_node['_dettaglio_scadenza']
+        
+        logging.info(
+            f"  ✅ Crediti breakdown from NI text: "
+            f"Clienti {crediti_commerciali_value:,.0f}€, "
+            f"Altri {crediti_altri_entro + crediti_altri_oltre:,.0f}€"
+        )
+
+    def _extract_crediti_commerciali_from_text(self, 
+                                              pdf: pdfplumber.PDF, 
+                                              start_page: int) -> Optional[float]:
+        """
+        Extract Crediti Commerciali value from Nota Integrativa raw text.
+        
+        Searches for patterns like:
+        - "Crediti commerciali, pari ad euro 2.340.197..."
+        - "I crediti verso clienti ammontano a euro 1.500.000..."
+        
+        Args:
+            pdf: PDF document object
+            start_page: Starting page of Nota Integrativa
+            
+        Returns:
+            Extracted value as float, or None if not found
+        """
+        header_patterns = [
+            'crediti commerciali',
+            'crediti verso clienti'
+        ]
+        
+        phrase_patterns = [
+            r'i\s+crediti\s+(?:commerciali|verso\s+clienti),?\s+pari\s+ad?\s+euro\s+([\d.,]+)',
+            r'i\s+crediti\s+(?:commerciali|verso\s+clienti)\s+ammontano\s+ad?\s+euro\s+([\d.,]+)',
+            r'i\s+crediti\s+(?:commerciali|verso\s+clienti)\s+sono\s+iscritti.*?euro\s+([\d.,]+)'
+        ]
+        
+        max_pages_to_search = 50
+        search_range = range(start_page, min(start_page + max_pages_to_search, len(pdf.pages)))
+        
+        for page_num in search_range:
+            page = pdf.pages[page_num]
+            page_text = page.extract_text() or ""
+            normalized_text = self._normalize_text(page_text, for_matching=False)
+            
+            header_found = False
+            for header in header_patterns:
+                if header in normalized_text.lower():
+                    header_found = True
+                    break
+            
+            if not header_found:
+                continue
+            
+            for pattern in phrase_patterns:
+                match = re.search(pattern, normalized_text, re.IGNORECASE)
+                if match:
+                    value_str = match.group(1)
+                    try:
+                        clean_value = value_str.replace('.', '').replace(',', '.')
+                        extracted_value = float(clean_value)
+                        
+                        logging.info(
+                            f"  📄 Found 'Crediti commerciali' on page {page_num + 1}: "
+                            f"{extracted_value:,.0f}€"
+                        )
+                        return extracted_value
+                    except (ValueError, AttributeError):
+                        continue
+        
+        return None
 
     def get_enrichment_statistics(self) -> Dict[str, Any]:
         """
